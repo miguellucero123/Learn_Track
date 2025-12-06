@@ -1,112 +1,137 @@
 // ============================================
-// LEARNTRACK - SIMULADOR PREDICTIVO WHAT-IF
+// LEARNTRACK - SIMULADOR PREDICTIVO WHAT-IF (Machine Learning Core)
 // ============================================
 
 (function () {
     'use strict';
 
     let currentStudent = null;
-    let originalRisk = 0;
-    let originalAttendance = 0;
-    let originalGrades = 0;
 
-    // Abrir Simulador para un estudiante
+    // Variables base del estudiante
+    let baseRiskProb = 0; // 0.0 a 1.0
+    let baseAttendance = 0;
+    let baseGrade = 0;
+
+    // COEFICIENTES DEL MODELO (Pesos aprendidos teóricos)
+    // En un modelo real, estos vienen del entrenamiento en Python (scikit-learn)
+    const WEIGHTS = {
+        INTERCEPT: 0,      // El sesgo se calcula dinámicamente para ajustar al estudiante
+        ATTENDANCE: -0.05, // Coeficiente negativo: Mayor asistencia => Menor riesgo
+        GRADE: -0.8        // Coeficiente negativo fuerte: Mayor nota => Menor riesgo drástico
+    };
+
+    // FUNCIÓN SIGMOIDE (La curva S estándar en Probabilidades)
+    // Convierte un valor 'z' (logit) cualquiera en una probabilidad entre 0 y 1
+    function sigmoid(z) {
+        return 1 / (1 + Math.exp(-z));
+    }
+
+    // FUNCIÓN LOGIT (Inversa de Sigmoide)
+    // Nos permite obtener el 'z' original dado un riesgo inicial
+    function logit(p) {
+        if (p >= 0.999) return 6.9; // Evitar infinito
+        if (p <= 0.001) return -6.9; // Evitar menos infinito
+        return Math.log(p / (1 - p));
+    }
+
+    // Abrir Simulador
     window.openSimulator = function (studentId) {
-        // Encontrar estudiante (usando window.studentsData de app-funcional.js)
         const student = window.studentsData.find(s => s.id === studentId);
-        if (!student) {
-            console.error('Estudiante no encontrado:', studentId);
-            return;
-        }
+        if (!student) return;
 
-        // Cerrar modal de detalle si está abierto
+        // Cerrar modal de detalle
         $('#studentDetailModal').modal('hide');
 
         currentStudent = student;
 
-        // Convertir riesgo "Alto - 85%" a número 85
-        originalRisk = parseFloat(student.riskPercentage);
-        originalAttendance = parseFloat(student.attendance);
-        originalGrades = parseFloat(student.average);
+        // Obtener valores base
+        baseRiskProb = parseFloat(student.riskPercentage) / 100;
+        baseAttendance = parseFloat(student.attendance);
+        baseGrade = parseFloat(student.average);
 
-        // Llenar Modal con datos iniciales
+        // UI Setup
         document.getElementById('simStudentName').textContent = student.name;
         document.getElementById('simStudentCareer').textContent = student.career;
 
-        // Configurar Sliders
+        // Sliders
         const sliderAttendance = document.getElementById('sliderAttendance');
-        const valAttendance = document.getElementById('valAttendance');
-        sliderAttendance.value = originalAttendance;
-        valAttendance.textContent = originalAttendance + '%';
+        sliderAttendance.value = baseAttendance;
+        document.getElementById('valAttendance').textContent = baseAttendance + '%';
 
         const sliderGrade = document.getElementById('sliderGrade');
-        const valGrade = document.getElementById('valGrade');
-        sliderGrade.value = originalGrades;
-        valGrade.textContent = originalGrades.toFixed(1);
+        sliderGrade.value = baseGrade;
+        document.getElementById('valGrade').textContent = baseGrade.toFixed(1);
 
-        // Resetear visualización
-        updateSimulation();
-
-        // Mostrar Modal
+        updateSimulation(); // Cálculo inicial
         $('#simulationModal').modal('show');
     };
 
-    // Función de cálculo en tiempo real
+    // CÁLCULO EN TIEMPO REAL
     window.updateSimulation = function () {
         if (!currentStudent) return;
 
-        const newAttendance = parseFloat(document.getElementById('sliderAttendance').value);
-        const newGrade = parseFloat(document.getElementById('sliderGrade').value);
+        // 1. Obtener nuevos valores de los inputs
+        const currentAttendance = parseFloat(document.getElementById('sliderAttendance').value);
+        const currentGrade = parseFloat(document.getElementById('sliderGrade').value);
 
-        // Actualizar etiquetas de valores
-        document.getElementById('valAttendance').textContent = newAttendance + '%';
-        document.getElementById('valGrade').textContent = newGrade.toFixed(1);
+        // UI Updates
+        document.getElementById('valAttendance').textContent = currentAttendance + '%';
+        document.getElementById('valGrade').textContent = currentGrade.toFixed(1);
 
-        // LÓGICA PREDICTIVA SIMULADA (Heurística)
-        // 1. Mejora en asistencia: Por cada 1% que sube sobre el original, el riesgo baja 0.5%
-        const attendanceDelta = newAttendance - originalAttendance;
-        const riskReductionAttendance = attendanceDelta * 0.8;
+        // 2. CALCULAR DELTAS (Cambios respecto a la base)
+        const deltaAttendance = currentAttendance - baseAttendance;
+        const deltaGrade = currentGrade - baseGrade;
 
-        // 2. Mejora en notas: Por cada 0.1 que sube, el riesgo baja 2%
-        const gradeDelta = newGrade - originalGrades;
-        const riskReductionGrade = (gradeDelta * 10) * 2.5;
+        // 3. INGENIERÍA DE MODELO (Regresión Logística)
+        // Paso A: Recuperar el 'z' (logit) original del estudiante
+        const originalZ = logit(baseRiskProb);
 
-        // Calcular nuevo riesgo
-        let newRisk = originalRisk - (riskReductionAttendance + riskReductionGrade);
+        // Paso B: Calcular el impacto en 'z' usando los pesos del modelo
+        // Z_nuevo = Z_original + (Peso_A * Cambio_A) + (Peso_G * Cambio_G)
+        const zImpact = (WEIGHTS.ATTENDANCE * deltaAttendance) + (WEIGHTS.GRADE * deltaGrade);
+        const newZ = originalZ + zImpact;
 
-        // Límites (0-100)
-        newRisk = Math.max(5, Math.min(99, newRisk));
+        // Paso C: Aplicar función de activación Sigmoide para obtener nueva probabilidad
+        const newProb = sigmoid(newZ);
+        const newRiskPercent = Math.round(newProb * 100);
 
-        // Actualizar UI del Resultado
+        // 4. VISUALIZACIÓN DE RESULTADOS
         const riskDisplay = document.getElementById('simNewRisk');
         const progressBar = document.getElementById('simRiskProgress');
         const deltaDisplay = document.getElementById('simRiskDelta');
 
-        riskDisplay.textContent = Math.round(newRisk) + '%';
-        progressBar.style.width = newRisk + '%';
+        riskDisplay.textContent = newRiskPercent + '%';
+        progressBar.style.width = newRiskPercent + '%';
 
-        // Colores dinámicos
+        // Colores semafóricos
         progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated';
-        if (newRisk < 40) progressBar.classList.add('bg-success');
-        else if (newRisk < 70) progressBar.classList.add('bg-warning');
+        if (newRiskPercent < 40) progressBar.classList.add('bg-success');
+        else if (newRiskPercent < 70) progressBar.classList.add('bg-warning');
         else progressBar.classList.add('bg-danger');
 
-        // Mostrar cambio
-        const riskChange = originalRisk - newRisk;
-        if (riskChange > 0) {
-            deltaDisplay.innerHTML = `<i class="fas fa-arrow-down"></i> Disminuye ${Math.round(riskChange)}%`;
+        // Calcular diferencia visual
+        const diff = (baseRiskProb * 100) - newRiskPercent;
+
+        if (diff > 0.5) {
+            deltaDisplay.innerHTML = `<i class="fas fa-arrow-down"></i> Probabilidad baja ${Math.round(diff)}%`;
             deltaDisplay.className = 'text-success font-weight-bold ml-2';
-        } else if (riskChange < 0) {
-            deltaDisplay.innerHTML = `<i class="fas fa-arrow-up"></i> Aumenta ${Math.round(Math.abs(riskChange))}%`;
+        } else if (diff < -0.5) {
+            deltaDisplay.innerHTML = `<i class="fas fa-arrow-up"></i> Probabilidad sube ${Math.round(Math.abs(diff))}%`;
             deltaDisplay.className = 'text-danger font-weight-bold ml-2';
         } else {
-            deltaDisplay.innerHTML = `<span class="text-muted">Sin cambios</span>`;
+            deltaDisplay.innerHTML = `<span class="text-muted small">Sin variación significativa (Modelo estable)</span>`;
+            deltaDisplay.className = 'text-muted ml-2';
+        }
+
+        // Actualizar información técnica del modelo en el footer de la card
+        const modelInfo = document.querySelector('.modal-body .small');
+        if (modelInfo) {
+            modelInfo.innerHTML = `<strong>Modelo:</strong> Regresión Logística (Sigmoide) | <strong>Logit Z:</strong> ${newZ.toFixed(2)}`;
         }
     };
 
-    // Inicialización de Event Listeners cuando el DOM está listo
     document.addEventListener('DOMContentLoaded', function () {
-        // Asignar eventos a los sliders si existen
+        // Event Listeners
         const s1 = document.getElementById('sliderAttendance');
         if (s1) s1.addEventListener('input', window.updateSimulation);
 
