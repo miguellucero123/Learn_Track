@@ -1,0 +1,222 @@
+// ============================================
+// DASHBOARD COMPONENTS - LearnTrack Dashboard
+// ============================================
+
+// DASHBOARD SECTION
+.dashboard-section {
+    background-color: $color-gray-light;
+}
+
+// KPI CARD
+.kpi-card {
+    @include card-base;
+    border-left: 4px solid;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        margin-bottom: $spacing-md;
+    }
+
+    &__icon {
+        font-size: $font-size-h4;
+    }
+
+    &__label {
+        font-size: $font-size-small;
+        font-weight: $font-weight-semibold;
+        color: $text-muted;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    &__body {
+        // Estilos del cuerpo
+    }
+
+    &__value {
+        font-size: $font-size-h2;
+        font-weight: $font-weight-extrabold;
+        margin-bottom: $spacing-xs;
+
+        @include respond-to(xs) {
+            font-size: $font-size-h3;
+        }
+    }
+
+    &__change {
+        font-size: $font-size-small;
+        font-weight: $font-weight-semibold;
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        margin: 0;
+
+        i {
+            font-size: 12px;
+        }
+
+        &--positive {
+            color: $color-success;
+        }
+
+        &--negative {
+            color: $color-danger;
+        }
+
+        &--neutral {
+            color: $text-muted;
+        }
+    }
+
+    &--danger {
+        border-left-color: $color-danger;
+
+        .kpi-card__icon {
+            color: $color-danger;
+        }
+
+        .kpi-card__value {
+            color: $color-danger;
+        }
+    }
+
+    &--warning {
+        border-left-color: $color-warning;
+
+        .kpi-card__icon {
+            color: $color-warning;
+        }
+
+        .kpi-card__value {
+            color: $color-warning;
+        }
+    }
+
+    &--success {
+        border-left-color: $color-success;
+
+        .kpi-card__icon {
+            color: $color-success;
+        }
+
+        .kpi-card__value {
+            color: $color-success;
+        }
+    }
+
+    &--info {
+        border-left-color: $color-info;
+
+        .kpi-card__icon {
+            color: $color-info;
+        }
+
+        .kpi-card__value {
+            color: $color-info;
+        }
+    }
+}
+
+// DATA TABLE CARD
+.data-table-card {
+    @include card-base;
+    padding: 0;
+
+    &:hover {
+        transform: none;
+    }
+
+    &__header {
+        padding: $spacing-lg;
+        border-bottom: 2px solid $color-gray-light;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: $spacing-md;
+    }
+
+    &__title {
+        font-size: $font-size-h4;
+        font-weight: $font-weight-bold;
+        color: $text-primary;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+
+        i {
+            color: $color-primary;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: $spacing-sm;
+    }
+
+    &__body {
+        padding: $spacing-lg;
+    }
+}
+
+// TABLE STYLES
+.table {
+    margin-bottom: 0;
+
+    thead {
+        th {
+            background-color: $color-dark-light;
+            color: $color-white;
+            font-weight: $font-weight-semibold;
+            text-transform: uppercase;
+            font-size: $font-size-small;
+            letter-spacing: 0.5px;
+            border: none;
+            padding: $spacing-md;
+        }
+    }
+
+    tbody {
+        tr {
+            @include transition(background-color, $transition-fast);
+
+            &:hover {
+                background-color: rgba($color-primary, 0.05);
+            }
+        }
+
+        td {
+            padding: $spacing-md;
+            vertical-align: middle;
+            border-top: 1px solid $color-gray-light;
+        }
+    }
+
+    .badge {
+        padding: $spacing-xs $spacing-sm;
+        font-size: $font-size-small;
+        font-weight: $font-weight-semibold;
+        @include border-radius($border-radius-sm);
+    }
+
+    .btn-sm {
+        padding: $spacing-xs $spacing-sm;
+        @include border-radius($border-radius-sm);
+        @include transition(all, $transition-fast);
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}
+
+.table-responsive {
+    @include border-radius($border-radius-sm);
+
+    @include respond-to(xs) {
+        font-size: $font-size-small;
+    }
+}

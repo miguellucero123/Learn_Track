@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnTrack Dashboard - Aplicación Funcional</title>
+
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Outfit:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+        /* Estilos adicionales para la app funcional */
+        .modal-student-detail {
+            max-width: 800px;
+        }
+
+        .risk-factor {
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border-left: 4px solid;
+        }
+
+        .risk-factor--high {
+            border-left-color: #ff6e7f;
+            background: rgba(255, 110, 127, 0.1);
+        }
+
+        .risk-factor--medium {
+            border-left-color: #fa709a;
+            background: rgba(250, 112, 154, 0.1);
+        }
+
+        .risk-factor--low {
+            border-left-color: #43e97b;
+            background: rgba(67, 233, 123, 0.1);
+        }
+
+        .intervention-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 10px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .intervention-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .alert-sent {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .student-row.highlighted {
+            background-color: rgba(102, 126, 234, 0.1) !important;
+            animation: highlight 1s ease;
+        }
+
+        @keyframes highlight {
+
+            0%,
+            100% {
+                background-color: rgba(102, 126, 234, 0.1);
+            }
+
+            50% {
+                background-color: rgba(102, 126, 234, 0.3);
+            }
+        }
+
+        .filter-active {
+            background-color: #667eea !important;
+            color: white !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER / NAVBAR -->
+    <header class="learntrack-header">
+        <nav class="navbar navbar-expand-lg navbar-dark learntrack-header__navbar">
+            <div class="container">
+                <a class="navbar-brand learntrack-header__brand" href="#home">
+                    <i class="fas fa-chart-line learntrack-header__icon"></i>
+                    <span class="learntrack-header__title">LearnTrack</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link learntrack-header__link active" href="#"
+                                onclick="showSection('dashboard'); return false;">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link learntrack-header__link" href="#"
+                                onclick="showSection('students'); return false;">Estudiantes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link learntrack-header__link" href="#"
+                                onclick="showSection('reports'); return false;">Reportes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link learntrack-header__link" href="#"
+                                onclick="showSection('settings'); return false;">
+                                <i class="fas fa-cog"></i> Configuración
+                            </a>
+                        </li>
+                        <li class="nav-item border-left ml-2 pl-2 d-none d-lg-block">
+                            <!-- Separador solo en desktop -->
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link learntrack-header__link text-warning" href="index.html">
+                                <i class="fas fa-sign-out-alt"></i> Salir
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="learntrack-main">
+
+        <!-- DASHBOARD SECTION -->
+        <section id="dashboard" class="dashboard-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-header__title">Dashboard en Tiempo Real</h2>
+                    <p class="section-header__subtitle">Monitoreo activo de estudiantes en riesgo</p>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-3 mb-4">
+                        <div class="kpi-card kpi-card--danger">
+                            <div class="kpi-card__header">
+                                <i class="fas fa-exclamation-triangle kpi-card__icon"></i>
+                                <span class="kpi-card__label">Estudiantes en Riesgo</span>
+                            </div>
+                            <div class="kpi-card__body">
+                                <h3 class="kpi-card__value" id="totalRisk">0</h3>
+                                <p class="kpi-card__change kpi-card__change--negative">
+                                    <i class="fas fa-arrow-up"></i> <span id="riskChange">0%</span> vs mes anterior
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3 mb-4">
+                        <div class="kpi-card kpi-card--warning">
+                            <div class="kpi-card__header">
+                                <i class="fas fa-user-clock kpi-card__icon"></i>
+                                <span class="kpi-card__label">Alertas Pendientes</span>
+                            </div>
+                            <div class="kpi-card__body">
+                                <h3 class="kpi-card__value" id="pendingAlerts">0</h3>
+                                <p class="kpi-card__change kpi-card__change--neutral">
+                                    <i class="fas fa-minus"></i> Requieren atención
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3 mb-4">
+                        <div class="kpi-card kpi-card--success">
+                            <div class="kpi-card__header">
+                                <i class="fas fa-check-circle kpi-card__icon"></i>
+                                <span class="kpi-card__label">Intervenciones Exitosas</span>
+                            </div>
+                            <div class="kpi-card__body">
+                                <h3 class="kpi-card__value" id="successfulInterventions">0</h3>
+                                <p class="kpi-card__change kpi-card__change--positive">
+                                    <i class="fas fa-arrow-down"></i> <span id="interventionRate">0%</span> deserción
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3 mb-4">
+                        <div class="kpi-card kpi-card--info">
+                            <div class="kpi-card__header">
+                                <i class="fas fa-coins kpi-card__icon"></i>
+                                <span class="kpi-card__label">Recuperación Económica</span>
+                            </div>
+                            <div class="kpi-card__body">
+                                <h3 class="kpi-card__value" id="economicRecovery">$0M</h3>
+                                <p class="kpi-card__change kpi-card__change--positive">
+                                    <i class="fas fa-arrow-up"></i> CLP recuperados
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filtros -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="data-table-card">
+                            <div class="data-table-card__header">
+                                <h3 class="data-table-card__title">
+                                    <i class="fas fa-filter"></i> Filtros
+                                </h3>
+                            </div>
+                            <div class="data-table-card__body">
+                                <div class="row">
+                                    <div class="col-md-3 mb-2">
+                                        <button class="btn btn-outline-primary btn-block filter-btn" data-filter="all">
+                                            Todos
+                                        </button>
+                                    </div>
+                                    <div class="col-md-3 mb-2">
+                                        <button class="btn btn-outline-danger btn-block filter-btn" data-filter="high">
+                                            Riesgo Alto
+                                        </button>
+                                    </div>
+                                    <div class="col-md-3 mb-2">
+                                        <button class="btn btn-outline-warning btn-block filter-btn"
+                                            data-filter="medium">
+                                            Riesgo Medio
+                                        </button>
+                                    </div>
+                                    <div class="col-md-3 mb-2">
+                                        <button class="btn btn-outline-success btn-block filter-btn" data-filter="low">
+                                            Riesgo Bajo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student Risk List -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="data-table-card">
+                            <div class="data-table-card__header">
+                                <h3 class="data-table-card__title">
+                                    <i class="fas fa-list"></i> Estudiantes en Riesgo
+                                </h3>
+                                <div class="data-table-card__actions">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="exportData()">
+                                        <i class="fas fa-download"></i> Exportar
+                                    </button>
+                                    <button class="btn btn-sm btn-primary" onclick="refreshData()">
+                                        <i class="fas fa-sync-alt"></i> Actualizar
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="data-table-card__body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="studentsTable">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Nombre</th>
+                                                <th>Carrera</th>
+                                                <th>Nivel Riesgo</th>
+                                                <th>Promedio</th>
+                                                <th>Asistencia</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="studentsTableBody">
+                                            <!-- Se llena con JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STUDENTS SECTION -->
+        <section id="students" class="students-section" style="display: none;">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-header__title">Gestión de Estudiantes</h2>
+                    <p class="section-header__subtitle">Vista completa de todos los estudiantes monitoreados</p>
+                </div>
+
+                <!-- Búsqueda y Filtros Avanzados -->
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="searchStudent"
+                                placeholder="Buscar por nombre, ID o carrera...">
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <select class="form-control" id="filterCareer">
+                            <option value="">Todas las carreras</option>
+                            <option value="Ingeniería Civil">Ingeniería Civil</option>
+                            <option value="Pedagogía">Pedagogía</option>
+                            <option value="Ciencias Sociales">Ciencias Sociales</option>
+                            <option value="Enfermería">Enfermería</option>
+                            <option value="Ingeniería Informática">Ingeniería Informática</option>
+                            <option value="Psicología">Psicología</option>
+                            <option value="Administración">Administración</option>
+                            <option value="Derecho">Derecho</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <button class="btn btn-primary btn-block" onclick="applyStudentFilters()">
+                            <i class="fas fa-filter"></i> Aplicar Filtros
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- Lista de Estudiantes en Cards -->
+                <div class="row" id="studentsCardContainer">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+
+                <!-- Paginación -->
+                <div class="row mt-4" id="paginationContainer" style="display: none;">
+                    <div class="col-12">
+                        <nav aria-label="Paginación de estudiantes">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item" id="prevPageBtn">
+                                    <a class="page-link" href="#" onclick="changePage('prev'); return false;">
+                                        <i class="fas fa-chevron-left"></i> Anterior
+                                    </a>
+                                </li>
+                                <li class="page-item active">
+                                    <span class="page-link" id="currentPageInfo">
+                                        Página <span id="currentPageNum">1</span> de <span id="totalPagesNum">1</span>
+                                    </span>
+                                </li>
+                                <li class="page-item" id="nextPageBtn">
+                                    <a class="page-link" href="#" onclick="changePage('next'); return false;">
+                                        Siguiente <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <p class="text-center text-muted">
+                            Mostrando <span id="showingFrom">1</span>-<span id="showingTo">6</span> de <span
+                                id="totalStudents">8</span> estudiantes
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- REPORTS SECTION -->
+        <section id="reports" class="reports-section" style="display: none;">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-header__title">Reportes y Analíticas</h2>
+                    <p class="section-header__subtitle">Análisis detallado del rendimiento y riesgo estudiantil</p>
+                </div>
+
+                <!-- Resumen Ejecutivo -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="data-table-card">
+                            <div class="data-table-card__header">
+                                <h3 class="data-table-card__title">
+                                    <i class="fas fa-chart-pie"></i> Resumen Ejecutivo
+                                </h3>
+                                <div class="data-table-card__actions">
+                                    <button class="btn btn-sm btn-primary" onclick="generatePDFReport()">
+                                        <i class="fas fa-file-pdf"></i> Generar PDF
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="data-table-card__body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <h5><i class="fas fa-chart-bar"></i> Distribución por Nivel de Riesgo</h5>
+                                        <div style="position: relative; height: 250px; width: 100%;">
+                                            <canvas id="riskDistributionChart"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <h5><i class="fas fa-graduation-cap"></i> Estudiantes por Carrera</h5>
+                                        <div style="position: relative; height: 250px; width: 100%;">
+                                            <canvas id="careerDistributionChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Métricas Detalladas -->
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="data-table-card">
+                            <div class="data-table-card__header">
+                                <h3 class="data-table-card__title">
+                                    <i class="fas fa-trophy"></i> Top Factores de Riesgo
+                                </h3>
+                            </div>
+                            <div class="data-table-card__body">
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Asistencia < 70% <span class="badge badge-danger badge-pill">65%</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Promedio < 4.5 <span class="badge badge-warning badge-pill">48%</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Sin tutoría
+                                        <span class="badge badge-info badge-pill">35%</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Problemas financieros
+                                        <span class="badge badge-warning badge-pill">28%</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="data-table-card">
+                            <div class="data-table-card__header">
+                                <h3 class="data-table-card__title">
+                                    <i class="fas fa-calendar-check"></i> Intervenciones del Mes
+                                </h3>
+                            </div>
+                            <div class="data-table-card__body">
+                                <div class="mb-3">
+                                    <h6>Total Intervenciones</h6>
+                                    <h2 class="text-primary">45</h2>
+                                </div>
+                                <div class="mb-3">
+                                    <h6>Exitosas</h6>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" style="width: 78%">78%</div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <h6>En Progreso</h6>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" style="width: 15%">15%</div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h6>Pendientes</h6>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-danger" style="width: 7%">7%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="data-table-card">
+                            <div class="data-table-card__header">
+                                <h3 class="data-table-card__title">
+                                    <i class="fas fa-chart-line"></i> Tendencia Mensual
+                                </h3>
+                            </div>
+                            <div class="data-table-card__body">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Mes</th>
+                                            <th>Riesgo Alto</th>
+                                            <th>Cambio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Noviembre</td>
+                                            <td>3</td>
+                                            <td><span class="text-success">↓ 2</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Octubre</td>
+                                            <td>5</td>
+                                            <td><span class="text-danger">↑ 1</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Septiembre</td>
+                                            <td>4</td>
+                                            <td><span class="text-success">↓ 3</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Tendencia Histórica -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="data-table-card">
+                            <div class="data-table-card__header">
+                                <h3 class="data-table-card__title">
+                                    <i class="fas fa-chart-line"></i> Tendencia Histórica (Últimos 6 Meses)
+                                </h3>
+                            </div>
+                            <div class="data-table-card__body">
+                                <div style="position: relative; height: 300px; width: 100%;">
+                                    <canvas id="trendChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <!-- SETTINGS SECTION -->
+        <section id="settings" class="settings-section" style="display: none;">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-header__title">Configuración del Sistema</h2>
+                    <p class="section-header__subtitle">Personaliza los parámetros del sistema predictivo</p>
+                </div>
+
+                <div class="row">
+                    <!-- Configuración de Alertas -->
+                    <div class="col-md-6 mb-4">
+                        <div class="data-table-card">
+                            <div class="data-table-card__header">
+                                <h3 class="data-table-card__title">
+                                    <i class="fas fa-bell"></i> Configuración de Alertas
+                                </h3>
+                            </div>
+                            <div class="data-table-card__body">
+                                <form id="alertSettingsForm">
+                                    <div class="form-group">
+                                        <label>Umbral de Riesgo Alto (%)</label>
+                                        <input type="range" class="custom-range" min="50" max="100" value="70"
+                                            id="highRiskThreshold">
+                                        <small class="form-text text-muted">Actual: <span
+                                                id="highRiskValue">70</span>%</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Umbral de Riesgo Medio (%)</label>
+                                        <input type="range" class="custom-range" min="30" max="70" value="50"
+                                            id="mediumRiskThreshold">
+                                        <small class="form-text text-muted">Actual: <span
+                                                id="mediumRiskValue">50</span>%</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Frecuencia de Actualización</label>
+                                        <select class="form-control" id="updateFrequency">
+                                            <option value="realtime">Tiempo Real</option>
+                                            <option value="hourly">Cada Hora</option>
+                                            <option value="daily" selected>Diaria</option>
+                                            <option value="weekly">Semanal</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                        <label class="form-check-label" for="emailNotifications">
+                                            Enviar notificaciones por email
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" id="autoEscalation" checked>
+                                        <label class="form-check-label" for="autoEscalation">
+                                            Escalamiento automático en 72h
+                                        </label>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary" onclick="saveAlertConfig()">
+                                        <i class="fas fa-save"></i> Guardar Configuración
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configuración del Modelo -->
+                    <div class="col-md-6 mb-4">
+                        <div class="data-table-card">
+                            <div class="data-table-card__header">
+                                <h3 class="data-table-card__title">
+                                    <i class="fas fa-brain"></i> Configuración del Modelo ML
+                                </h3>
+                            </div>
+                            <div class="data-table-card__body">
+                                <form id="modelSettingsForm">
+                                    <div class="form-group">
+                                        <label>Modelo Activo</label>
+                                        <select class="form-control" id="activeModel">
+                                            <option value="random_forest" selected>Random Forest</option>
+                                            <option value="xgboost">XGBoost</option>
+                                            <option value="logistic">Regresión Logística</option>
+                                            <option value="ensemble">Ensemble (Todos)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Precisión Mínima Requerida (%)</label>
+                                        <input type="number" class="form-control" value="70" min="50" max="100"
+                                            id="minPrecision">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Factores de Riesgo Considerados</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="factor_attendance"
+                                                checked>
+                                            <label class="form-check-label" for="factor_attendance">Asistencia</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="factor_grades" checked>
+                                            <label class="form-check-label" for="factor_grades">Promedio de
+                                                Notas</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="factor_financial"
+                                                checked>
+                                            <label class="form-check-label" for="factor_financial">Situación
+                                                Financiera</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="factor_social" checked>
+                                            <label class="form-check-label" for="factor_social">Factores
+                                                Sociales</label>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary" onclick="saveModelConfig()">
+                                        <i class="fas fa-save"></i> Guardar Configuración
+                                    </button>
+                                    <button type="button" class="btn btn-warning" onclick="retrainModel()">
+                                        <i class="fas fa-sync-alt"></i> Reentrenar Modelo
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información del Sistema -->
+                    <div class="col-12 mb-4">
+                        <div class="data-table-card">
+                            <div class="data-table-card__header">
+                                <h3 class="data-table-card__title">
+                                    <i class="fas fa-info-circle"></i> Información del Sistema
+                                </h3>
+                            </div>
+                            <div class="data-table-card__body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h6>Versión</h6>
+                                        <p class="text-muted">1.0.0 Funcional</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6>Última Actualización</h6>
+                                        <p class="text-muted" id="systemLastUpdate">--</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6>Estudiantes Monitoreados</h6>
+                                        <p class="text-muted">8 activos</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6>Estado del Modelo</h6>
+                                        <p class="text-success"><i class="fas fa-check-circle"></i> Operativo</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h6>Precisión Actual</h6>
+                                        <div class="progress" style="height: 25px;">
+                                            <div class="progress-bar bg-success" style="width: 85%">85%</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6>F1-Score</h6>
+                                        <div class="progress" style="height: 25px;">
+                                            <div class="progress-bar bg-info" style="width: 78%">0.78</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6>AUC-ROC</h6>
+                                        <div class="progress" style="height: 25px;">
+                                            <div class="progress-bar bg-primary" style="width: 82%">0.82</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gestión de Configuración -->
+                    <div class="col-12 mb-4">
+                        <div class="data-table-card">
+                            <div class="data-table-card__header">
+                                <h3 class="data-table-card__title">
+                                    <i class="fas fa-cog"></i> Gestión de Configuración
+                                </h3>
+                            </div>
+                            <div class="data-table-card__body">
+                                <p class="text-muted mb-3">
+                                    Administra tu configuración guardada. Todos los cambios se guardan automáticamente
+                                    en tu navegador.
+                                </p>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <button class="btn btn-success btn-block" onclick="exportConfig()">
+                                            <i class="fas fa-download"></i> Exportar Configuración
+                                        </button>
+                                        <small class="text-muted">Descarga tu configuración como JSON</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="btn btn-primary btn-block mb-0" style="cursor: pointer;">
+                                            <i class="fas fa-upload"></i> Importar Configuración
+                                            <input type="file" accept=".json" onchange="importConfig(this.files[0])"
+                                                style="display: none;">
+                                        </label>
+                                        <small class="text-muted">Carga configuración desde archivo</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <button class="btn btn-danger btn-block" onclick="resetConfig()">
+                                            <i class="fas fa-undo"></i> Resetear Todo
+                                        </button>
+                                        <small class="text-muted">Volver a configuración por defecto</small>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="alert alert-info mb-0">
+                                    <i class="fas fa-info-circle"></i>
+                                    <strong>Nota:</strong> Tu configuración se guarda automáticamente en este navegador.
+                                    Si cambias de dispositivo o navegador, puedes exportar e importar tu configuración.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mejoras Avanzadas -->
+                    <div class="col-12 mb-4">
+                        <div class="data-table-card">
+                            <div class="data-table-card__header">
+                                <h3 class="data-table-card__title">
+                                    <i class="fas fa-magic"></i> Mejoras Avanzadas
+                                </h3>
+                            </div>
+                            <div class="data-table-card__body">
+                                <div class="row">
+                                    <!-- Selector de Tema -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="themeSelector"><i class="fas fa-palette"></i> Tema de Color</label>
+                                        <select id="themeSelector" class="form-control"
+                                            onchange="applyColorTheme(this.value)">
+                                            <option value="default">Predeterminado (Azul/Púrpura)</option>
+                                            <option value="ocean">Océano (Azul)</option>
+                                            <option value="sunset">Atardecer (Rojo/Naranja)</option>
+                                            <option value="forest">Bosque (Verde)</option>
+                                        </select>
+                                        <small class="text-muted">Cambia el esquema de colores de la aplicación</small>
+                                    </div>
+
+                                    <!-- Vista Compacta -->
+                                    <div class="col-md-6 mb-3">
+                                        <label><i class="fas fa-compress"></i> Vista de Estudiantes</label>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="compactViewToggle"
+                                                onchange="toggleCompactView()">
+                                            <label class="form-check-label" for="compactViewToggle">
+                                                Vista Compacta
+                                            </label>
+                                        </div>
+                                        <small class="text-muted">Muestra más estudiantes en menos espacio</small>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row">
+                                    <!-- Importar CSV -->
+                                    <div class="col-md-6 mb-3">
+                                        <label><i class="fas fa-file-csv"></i> Importar Datos</label>
+                                        <label class="btn btn-success btn-block" style="cursor: pointer;">
+                                            <i class="fas fa-upload"></i> Importar Estudiantes (CSV)
+                                            <input type="file" accept=".csv" onchange="importCSVData(this.files[0])"
+                                                style="display: none;">
+                                        </label>
+                                        <small class="text-muted">Formato:
+                                            ID,Nombre,Carrera,Riesgo%,Promedio,Asistencia%</small>
+                                    </div>
+
+                                    <!-- Modo Presentación -->
+                                    <div class="col-md-6 mb-3">
+                                        <label><i class="fas fa-desktop"></i> Modo Presentación</label>
+                                        <button class="btn btn-info btn-block" onclick="togglePresentationMode()">
+                                            <i class="fas fa-expand"></i> Activar Modo Presentación
+                                        </button>
+                                        <small class="text-muted">Fullscreen con navegación por flechas</small>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="alert alert-info mb-0">
+                                    <i class="fas fa-keyboard"></i>
+                                    <strong>Atajos de Teclado:</strong> Presiona <kbd>?</kbd> para ver todos los atajos
+                                    disponibles.
+                                    Usa <kbd>1-4</kbd> para navegar entre secciones.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="learntrack-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-4 mb-4">
+                    <h5 class="learntrack-footer__title">
+                        <i class="fas fa-chart-line"></i> LearnTrack
+                    </h5>
+                    <p class="learntrack-footer__description">
+                        Sistema Predictivo de Retención Estudiantil - Aplicación Funcional
+                    </p>
+                </div>
+                <div class="col-12 col-md-4 mb-4">
+                    <h5 class="learntrack-footer__title">Estado del Sistema</h5>
+                    <p class="learntrack-footer__info">
+                        <strong>Estado:</strong> <span class="text-success">Activo</span><br>
+                        <strong>Última actualización:</strong> <span id="lastUpdate">--</span><br>
+                        <strong>Estudiantes monitoreados:</strong> <span id="totalStudents">0</span>
+                    </p>
+                </div>
+                <div class="col-12 col-md-4 mb-4">
+                    <h5 class="learntrack-footer__title">Proyecto</h5>
+                    <p class="learntrack-footer__info">
+                        <strong>Versión:</strong> 1.0 Funcional<br>
+                        <strong>Año:</strong> 2025<br>
+                        <strong>Institución:</strong> AIEP
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="learntrack-footer__bottom">
+                        <p>&copy; 2025 LearnTrack Dashboard. Todos los derechos reservados.</p>
+                        <p class="learntrack-footer__tech">
+                            Desarrollado con <i class="fas fa-heart text-danger"></i> usando SASS, Bootstrap 4 y
+                            JavaScript
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL: Detalle del Estudiante -->
+    <div class="modal fade" id="studentDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-student-detail modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-user-graduate"></i> Detalle del Estudiante
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="studentDetailBody">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="generateIntervention()">
+                        <i class="fas fa-robot"></i> Generar Intervención IA
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Alerta Enviada -->
+    <div class="modal fade" id="alertSentModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-check-circle"></i> Alerta Enviada
+                    </h5>
+                    <button type="button" class="close text-white" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center py-3">
+                        <i class="fas fa-envelope fa-3x text-success mb-3"></i>
+                        <h4>¡Alerta enviada exitosamente!</h4>
+                        <p class="text-muted" id="alertMessage">
+                            Se ha notificado al Director de Carrera sobre el estudiante.
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery, Popper.js, Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
+    <!-- Chart.js para gráficos interactivos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- jsPDF para generación de PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- LocalStorage Manager -->
+    <strong>Nota:</strong> Tu configuración se guarda automáticamente en este navegador.
+    Si cambias de dispositivo o navegador, puedes exportar e importar tu configuración.
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- Mejoras Avanzadas -->
+    <div class="col-12 mb-4">
+        <div class="data-table-card">
+            <div class="data-table-card__header">
+                <h3 class="data-table-card__title">
+                    <i class="fas fa-magic"></i> Mejoras Avanzadas
+                </h3>
+            </div>
+            <div class="data-table-card__body">
+                <div class="row">
+                    <!-- Selector de Tema -->
+                    <div class="col-md-6 mb-3">
+                        <label for="themeSelector"><i class="fas fa-palette"></i> Tema de Color</label>
+                        <select id="themeSelector" class="form-control" onchange="applyColorTheme(this.value)">
+                            <option value="default">Predeterminado (Azul/Púrpura)</option>
+                            <option value="ocean">Océano (Azul)</option>
+                            <option value="sunset">Atardecer (Rojo/Naranja)</option>
+                            <option value="forest">Bosque (Verde)</option>
+                        </select>
+                        <small class="text-muted">Cambia el esquema de colores de la aplicación</small>
+                    </div>
+
+                    <!-- Vista Compacta -->
+                    <div class="col-md-6 mb-3">
+                        <label><i class="fas fa-compress"></i> Vista de Estudiantes</label>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="compactViewToggle"
+                                onchange="toggleCompactView()">
+                            <label class="form-check-label" for="compactViewToggle">
+                                Vista Compacta
+                            </label>
+                        </div>
+                        <small class="text-muted">Muestra más estudiantes en menos espacio</small>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <!-- Importar CSV -->
+                    <div class="col-md-6 mb-3">
+                        <label><i class="fas fa-file-csv"></i> Importar Datos</label>
+                        <label class="btn btn-success btn-block" style="cursor: pointer;">
+                            <i class="fas fa-upload"></i> Importar Estudiantes (CSV)
+                            <input type="file" accept=".csv" onchange="importCSVData(this.files[0])"
+                                style="display: none;">
+                        </label>
+                        <small class="text-muted">Formato:
+                            ID,Nombre,Carrera,Riesgo%,Promedio,Asistencia%</small>
+                    </div>
+
+                    <!-- Modo Presentación -->
+                    <div class="col-md-6 mb-3">
+                        <label><i class="fas fa-desktop"></i> Modo Presentación</label>
+                        <button class="btn btn-info btn-block" onclick="togglePresentationMode()">
+                            <i class="fas fa-expand"></i> Activar Modo Presentación
+                        </button>
+                        <small class="text-muted">Fullscreen con navegación por flechas</small>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="alert alert-info mb-0">
+                    <i class="fas fa-keyboard"></i>
+                    <strong>Atajos de Teclado:</strong> Presiona <kbd>?</kbd> para ver todos los atajos
+                    disponibles.
+                    Usa <kbd>1-4</kbd> para navegar entre secciones.
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="learntrack-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-4 mb-4">
+                    <h5 class="learntrack-footer__title">
+                        <i class="fas fa-chart-line"></i> LearnTrack
+                    </h5>
+                    <p class="learntrack-footer__description">
+                        Sistema Predictivo de Retención Estudiantil - Aplicación Funcional
+                    </p>
+                </div>
+                <div class="col-12 col-md-4 mb-4">
+                    <h5 class="learntrack-footer__title">Estado del Sistema</h5>
+                    <p class="learntrack-footer__info">
+                        <strong>Estado:</strong> <span class="text-success">Activo</span><br>
+                        <strong>Última actualización:</strong> <span id="lastUpdate">--</span><br>
+                        <strong>Estudiantes monitoreados:</strong> <span id="totalStudents">0</span>
+                    </p>
+                </div>
+                <div class="col-12 col-md-4 mb-4">
+                    <h5 class="learntrack-footer__title">Proyecto</h5>
+                    <p class="learntrack-footer__info">
+                        <strong>Versión:</strong> 1.0 Funcional<br>
+                        <strong>Año:</strong> 2025<br>
+                        <strong>Institución:</strong> AIEP
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="learntrack-footer__bottom">
+                        <p>&copy; 2025 LearnTrack Dashboard. Todos los derechos reservados.</p>
+                        <p class="learntrack-footer__tech">
+                            Desarrollado con <i class="fas fa-heart text-danger"></i> usando SASS, Bootstrap 4 y
+                            JavaScript
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL: Detalle del Estudiante -->
+    <div class="modal fade" id="studentDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-student-detail modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-user-graduate"></i> Detalle del Estudiante
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="studentDetailBody">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="generateIntervention()">
+                        <i class="fas fa-robot"></i> Generar Intervención IA
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Alerta Enviada -->
+    <div class="modal fade" id="alertSentModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-check-circle"></i> Alerta Enviada
+                    </h5>
+                    <button type="button" class="close text-white" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center py-3">
+                        <i class="fas fa-envelope fa-3x text-success mb-3"></i>
+                        <h4>¡Alerta enviada exitosamente!</h4>
+                        <p class="text-muted" id="alertMessage">
+                            Se ha notificado al Director de Carrera sobre el estudiante.
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery, Popper.js, Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
+    <!-- Chart.js para gráficos interactivos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- jsPDF para generación de PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- Utilidades y Core -->
+    <script src="js/localStorage-manager.js"></script>
+    <script src="js/pdf-generator.js"></script>
+
+    <!-- Core Application Logic (Must load first) -->
+    <script src="js/app-funcional.js?v=CHARTS_V1"></script>
+
+    <!-- Features and Extensions -->
+    <script src="js/pagination-manager.js"></script>
+    <script src="js/integration-patch.js"></script>
+    <script src="js/advanced-features.js"></script>
+
+    <!-- Script de Diagnóstico -->
+    <script>
+        window.addEventListener('error', function (e) {
+            console.error('Error global:', e.message);
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(() => {
+                if (typeof window.showSection === 'function') {
+                    console.log('✅ App Core cargado correctamente');
+                }
+                if (typeof window.toggleCompactView === 'function') {
+                    console.log('✅ Funciones avanzadas cargadas correctamente');
+                }
+            }, 500);
+        });
+    </script>
+</body>
+
+</html>

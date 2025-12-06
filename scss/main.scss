@@ -1,0 +1,20 @@
+// ============================================
+// MAIN SASS FILE - LearnTrack Dashboard
+// ============================================
+// Este archivo importa todos los parciales de SASS
+// siguiendo la metodología BEM y arquitectura modular
+
+// BASE
+@import 'base/variables';
+@import 'base/mixins';
+@import 'base/base';
+
+// LAYOUT
+@import 'layout/layout';
+
+// COMPONENTS
+@import 'components/hero';
+@import 'components/dashboard';
+@import 'components/features';
+@import 'components/impact';
+@import 'components/contact';

@@ -1,0 +1,258 @@
+// ============================================
+// HERO SECTION COMPONENT - LearnTrack Dashboard
+// ============================================
+
+.hero-section {
+    @include gradient-bg($gradient-primary);
+    color: $color-white;
+    padding: $spacing-xxxl 0;
+    position: relative;
+    overflow: hidden;
+
+    @include respond-to(xs) {
+        padding: $spacing-xxl 0;
+    }
+
+    // Efecto de fondo animado
+    &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 600px;
+        height: 600px;
+        background: rgba($color-white, 0.05);
+        @include border-radius($border-radius-full);
+        animation: float 20s infinite ease-in-out;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -30%;
+        left: -5%;
+        width: 400px;
+        height: 400px;
+        background: rgba($color-white, 0.03);
+        @include border-radius($border-radius-full);
+        animation: float 15s infinite ease-in-out reverse;
+    }
+
+    &__content {
+        position: relative;
+        z-index: 2;
+
+        @include respond-to(xs) {
+            text-align: center;
+            margin-bottom: $spacing-xl;
+        }
+    }
+
+    &__icon-wrapper {
+        margin-bottom: $spacing-lg;
+    }
+
+    &__icon {
+        font-size: 80px;
+        animation: pulse-glow 3s infinite;
+
+        @include respond-to(xs) {
+            font-size: 60px;
+        }
+    }
+
+    &__title {
+        font-size: 56px;
+        font-weight: $font-weight-extrabold;
+        color: $color-white;
+        margin-bottom: $spacing-md;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+
+        @include respond-to(xs) {
+            font-size: $font-size-h2;
+        }
+    }
+
+    &__subtitle {
+        font-size: $font-size-h4;
+        font-weight: $font-weight-semibold;
+        color: rgba($color-white, 0.95);
+        margin-bottom: $spacing-lg;
+
+        @include respond-to(xs) {
+            font-size: $font-size-h5;
+        }
+    }
+
+    &__description {
+        font-size: $font-size-large;
+        color: rgba($color-white, 0.9);
+        line-height: 1.8;
+        margin-bottom: $spacing-xl;
+        max-width: 600px;
+
+        @include respond-to(xs) {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        strong {
+            color: $color-white;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    &__cta {
+        display: flex;
+        gap: $spacing-md;
+        flex-wrap: wrap;
+
+        @include respond-to(xs) {
+            justify-content: center;
+        }
+    }
+
+    &__btn {
+        @include border-radius($border-radius-sm);
+        font-weight: $font-weight-semibold;
+        padding: $spacing-md $spacing-xl;
+        @include transition(all, $transition-normal);
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-sm;
+
+        &--primary {
+            background-color: $color-white;
+            color: $color-primary;
+            border: 2px solid $color-white;
+
+            &:hover {
+                background-color: transparent;
+                color: $color-white;
+                transform: translateY(-3px);
+                @include box-shadow($shadow-lg);
+            }
+        }
+
+        &--secondary {
+            background-color: transparent;
+            color: $color-white;
+            border: 2px solid $color-white;
+
+            &:hover {
+                background-color: $color-white;
+                color: $color-primary;
+                transform: translateY(-3px);
+                @include box-shadow($shadow-lg);
+            }
+        }
+    }
+
+    &__visual {
+        position: relative;
+        z-index: 2;
+    }
+}
+
+// STATS GRID
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-lg;
+
+    @include respond-to(xs) {
+        grid-template-columns: 1fr;
+        gap: $spacing-md;
+    }
+}
+
+// STAT CARD
+.stat-card {
+    @include glassmorphism(0.15);
+    @include border-radius($border-radius-lg);
+    padding: $spacing-lg;
+    text-align: center;
+    @include transition(all, $transition-normal);
+    border: 1px solid rgba($color-white, 0.3);
+
+    &:hover {
+        transform: translateY(-5px) scale(1.02);
+        @include glassmorphism(0.25);
+        @include box-shadow($shadow-xl);
+    }
+
+    &__icon {
+        font-size: 40px;
+        margin-bottom: $spacing-md;
+        opacity: 0.9;
+    }
+
+    &__value {
+        font-size: $font-size-h2;
+        font-weight: $font-weight-extrabold;
+        color: $color-white;
+        margin-bottom: $spacing-xs;
+
+        @include respond-to(xs) {
+            font-size: $font-size-h3;
+        }
+    }
+
+    &__label {
+        font-size: $font-size-small;
+        color: rgba($color-white, 0.85);
+        margin: 0;
+        line-height: 1.4;
+    }
+
+    &--primary {
+        .stat-card__icon {
+            color: lighten($color-info, 20%);
+        }
+    }
+
+    &--success {
+        .stat-card__icon {
+            color: lighten($color-success, 10%);
+        }
+    }
+
+    &--warning {
+        .stat-card__icon {
+            color: lighten($color-warning, 15%);
+        }
+    }
+
+    &--info {
+        .stat-card__icon {
+            color: lighten($color-info, 15%);
+        }
+    }
+}
+
+// ANIMACIONES
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+}
+
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}

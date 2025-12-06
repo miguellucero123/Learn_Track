@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="LearnTrack Dashboard - Sistema Predictivo de Retención Estudiantil con IA y Machine Learning">
+    <meta name="keywords" content="educación, retención estudiantil, machine learning, analítica predictiva">
+    <meta name="author" content="LearnTrack Team">
+    <title>LearnTrack Dashboard - Sistema Predictivo de Retención Estudiantil</title>
+
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Outfit:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS (compiled from SASS) -->
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+    <!-- HEADER / NAVBAR -->
+    <header class="learntrack-header">
+        <nav class="navbar navbar-expand-lg navbar-dark learntrack-header__navbar">
+            <div class="container">
+                <a class="navbar-brand learntrack-header__brand" href="#home">
+                    <i class="fas fa-chart-line learntrack-header__icon"></i>
+                    <span class="learntrack-header__title">LearnTrack</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link learntrack-header__link" href="#home">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link learntrack-header__link" href="#dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link learntrack-header__link" href="#features">Características</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link learntrack-header__link" href="#impact">Impacto</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link learntrack-header__link" href="#contact">Contacto</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="learntrack-main">
+
+        <!-- HERO SECTION -->
+        <section id="home" class="hero-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 hero-section__content">
+                        <div class="hero-section__icon-wrapper">
+                            <i class="fas fa-brain hero-section__icon"></i>
+                        </div>
+                        <h1 class="hero-section__title">LearnTrack Dashboard</h1>
+                        <p class="hero-section__subtitle">Sistema Predictivo de Retención Estudiantil</p>
+                        <p class="hero-section__description">
+                            Inteligencia Artificial + Machine Learning + Explicabilidad Total para reducir la deserción
+                            estudiantil hasta un <strong>12%</strong>
+                        </p>
+                        <div class="hero-section__cta">
+                            <a href="app_funcional.html"
+                                class="btn btn-primary btn-lg hero-section__btn hero-section__btn--primary">
+                                <i class="fas fa-rocket"></i> Abrir Aplicación
+                            </a>
+                            <a href="#contact"
+                                class="btn btn-outline-light btn-lg hero-section__btn hero-section__btn--secondary">
+                                <i class="fas fa-envelope"></i> Solicitar Demo
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 hero-section__visual">
+                        <div class="stats-grid">
+                            <div class="stat-card stat-card--primary">
+                                <div class="stat-card__icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h3 class="stat-card__value">227,366</h3>
+                                <p class="stat-card__label">Estudiantes desertan anualmente</p>
+                            </div>
+                            <div class="stat-card stat-card--success">
+                                <div class="stat-card__icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h3 class="stat-card__value">≥70%</h3>
+                                <p class="stat-card__label">Precisión predictiva</p>
+                            </div>
+                            <div class="stat-card stat-card--warning">
+                                <div class="stat-card__icon">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <h3 class="stat-card__value">287%</h3>
+                                <p class="stat-card__label">ROI a 3 años</p>
+                            </div>
+                            <div class="stat-card stat-card--info">
+                                <div class="stat-card__icon">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <h3 class="stat-card__value">6 meses</h3>
+                                <p class="stat-card__label">Detección anticipada</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="col-12 col-md-6 col-lg-3 mb-4">
+            <div class="kpi-card kpi-card--danger">
+                <div class="kpi-card__header">
+                    <i class="fas fa-exclamation-triangle kpi-card__icon"></i>
+                    <span class="kpi-card__label">Estudiantes en Riesgo</span>
+                </div>
+                <div class="kpi-card__body">
+                    <h3 class="kpi-card__value">1,200</h3>
+                    <p class="kpi-card__change kpi-card__change--negative">
+                        <i class="fas fa-arrow-up"></i> +8% vs mes anterior
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3 mb-4">
+            <div class="kpi-card kpi-card--warning">
+                <div class="kpi-card__header">
+                    <i class="fas fa-user-clock kpi-card__icon"></i>
+                    <span class="kpi-card__label">Alertas Pendientes</span>
+                </div>
+                <div class="kpi-card__body">
+                    <h3 class="kpi-card__value">45</h3>
+                    <p class="kpi-card__change kpi-card__change--neutral">
+                        <i class="fas fa-minus"></i> Sin cambios
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3 mb-4">
+            <div class="kpi-card kpi-card--success">
+                <div class="kpi-card__header">
+                    <i class="fas fa-check-circle kpi-card__icon"></i>
+                    <span class="kpi-card__label">Intervenciones Exitosas</span>
+                </div>
+                <div class="kpi-card__body">
+                    <h3 class="kpi-card__value">180</h3>
+                    <p class="kpi-card__change kpi-card__change--positive">
+                        <i class="fas fa-arrow-down"></i> -12% deserción
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3 mb-4">
+            <div class="kpi-card kpi-card--info">
+                <div class="kpi-card__header">
+                    <i class="fas fa-coins kpi-card__icon"></i>
+                    <span class="kpi-card__label">Recuperación Económica</span>
+                </div>
+                <div class="kpi-card__body">
+                    <h3 class="kpi-card__value">$27M</h3>
+                    <p class="kpi-card__change kpi-card__change--positive">
+                        <i class="fas fa-arrow-up"></i> CLP recuperados
+                    </p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Student Risk List -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="data-table-card">
+                    <div class="data-table-card__header">
+                        <h3 class="data-table-card__title">
+                            <i class="fas fa-list"></i> Estudiantes en Riesgo Alto
+                        </h3>
+                        <div class="data-table-card__actions">
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-download"></i> Exportar
+                            </button>
+                            <button class="btn btn-sm btn-primary">
+                                <i class="fas fa-filter"></i> Filtrar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="data-table-card__body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Carrera</th>
+                                        <th>Nivel Riesgo</th>
+                                        <th>Promedio</th>
+                                        <th>Asistencia</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#2024001</td>
+                                        <td>Juan Pérez</td>
+                                        <td>Ingeniería Civil</td>
+                                        <td><span class="badge badge-danger">Alto - 85%</span></td>
+                                        <td>4.2</td>
+                                        <td>65%</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info" title="Ver detalles">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-warning" title="Enviar alerta">
+                                                <i class="fas fa-bell"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#2024002</td>
+                                        <td>María González</td>
+                                        <td>Pedagogía</td>
+                                        <td><span class="badge badge-danger">Alto - 78%</span></td>
+                                        <td>4.0</td>
+                                        <td>68%</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info" title="Ver detalles">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-warning" title="Enviar alerta">
+                                                <i class="fas fa-bell"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#2024003</td>
+                                        <td>Carlos Ramírez</td>
+                                        <td>Ciencias Sociales</td>
+                                        <td><span class="badge badge-warning">Medio - 62%</span></td>
+                                        <td>4.5</td>
+                                        <td>72%</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info" title="Ver detalles">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-warning" title="Enviar alerta">
+                                                <i class="fas fa-bell"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </section>
+
+        <!-- FEATURES SECTION -->
+        <section id="features" class="features-section">
+            <div class="container">
+                <div class="section-header section-header--light">
+                    <h2 class="section-header__title">Características Únicas</h2>
+                    <p class="section-header__subtitle">Lo que hace a LearnTrack diferente de otras soluciones</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-card__icon feature-card__icon--primary">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <h3 class="feature-card__title">Predicción Precisa</h3>
+                            <p class="feature-card__description">
+                                Identifica estudiantes en riesgo con ≥70% de precisión (F1-Score >0.75) usando Random
+                                Forest y XGBoost
+                            </p>
+                            <ul class="feature-card__list">
+                                <li>Validación cruzada</li>
+                                <li>AUC-ROC >0.80</li>
+                                <li>Actualización diaria</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-card__icon feature-card__icon--success">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3 class="feature-card__title">Explicabilidad Total</h3>
+                            <p class="feature-card__description">
+                                SHAP values muestran exactamente por qué un estudiante está en riesgo, no es una caja
+                                negra
+                            </p>
+                            <ul class="feature-card__list">
+                                <li>Factores específicos por estudiante</li>
+                                <li>Contribución porcentual</li>
+                                <li>Transparencia total (XAI)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-card__icon feature-card__icon--warning">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <h3 class="feature-card__title">Alertas Inteligentes</h3>
+                            <p class="feature-card__description">
+                                Notificaciones automáticas por email con priorización y escalamiento en 72h
+                            </p>
+                            <ul class="feature-card__list">
+                                <li>Crítico / Alto / Medio / Bajo</li>
+                                <li>Acciones sugeridas</li>
+                                <li>Seguimiento automatizado</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-card__icon feature-card__icon--info">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <h3 class="feature-card__title">Dashboard Interactivo</h3>
+                            <p class="feature-card__description">
+                                15+ visualizaciones en Power BI con 8 KPIs críticos y drill-down por carrera
+                            </p>
+                            <ul class="feature-card__list">
+                                <li>Vista ejecutiva y detallada</li>
+                                <li>Filtros dinámicos</li>
+                                <li>Exportación de reportes</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-card__icon feature-card__icon--danger">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h3 class="feature-card__title">IA Generativa</h3>
+                            <p class="feature-card__description">
+                                Recomendaciones personalizadas con Azure OpenAI considerando contexto chileno
+                            </p>
+                            <ul class="feature-card__list">
+                                <li>Intervenciones específicas</li>
+                                <li>Variables socioeconómicas</li>
+                                <li>Mejora continua</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-card__icon feature-card__icon--secondary">
+                                <i class="fas fa-balance-scale"></i>
+                            </div>
+                            <h3 class="feature-card__title">Benchmarking</h3>
+                            <p class="feature-card__description">
+                                Compara tu institución vs. promedio nacional por tipo de carrera y perfil
+                            </p>
+                            <ul class="feature-card__list">
+                                <li>Métricas comparativas</li>
+                                <li>Mejores prácticas</li>
+                                <li>Posicionamiento sectorial</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPACT SECTION -->
+        <section id="impact" class="impact-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-header__title">Impacto Cuantificado</h2>
+                    <p class="section-header__subtitle">Resultados medibles por tipo de carrera</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="impact-table-wrapper">
+                            <table class="table table-striped impact-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de Carrera</th>
+                                        <th>Deserción Base</th>
+                                        <th>Reducción Proyectada</th>
+                                        <th>Nueva Tasa</th>
+                                        <th>Impacto</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Ingenierías</strong></td>
+                                        <td>22%</td>
+                                        <td class="text-success"><strong>8-10%</strong></td>
+                                        <td>12-14%</td>
+                                        <td><span class="badge badge-success">Alto</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Ciencias Sociales</strong></td>
+                                        <td>28%</td>
+                                        <td class="text-success"><strong>12-15%</strong></td>
+                                        <td>13-16%</td>
+                                        <td><span class="badge badge-success">Muy Alto</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Carreras de Salud</strong></td>
+                                        <td>15%</td>
+                                        <td class="text-success"><strong>6-8%</strong></td>
+                                        <td>7-9%</td>
+                                        <td><span class="badge badge-info">Moderado</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Pedagogías</strong></td>
+                                        <td>25%</td>
+                                        <td class="text-success"><strong>10-13%</strong></td>
+                                        <td>12-15%</td>
+                                        <td><span class="badge badge-success">Alto</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Humanidades</strong></td>
+                                        <td>30%</td>
+                                        <td class="text-success"><strong>13-16%</strong></td>
+                                        <td>14-17%</td>
+                                        <td><span class="badge badge-success">Muy Alto</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-12 col-md-4 mb-4">
+                        <div class="roi-card">
+                            <div class="roi-card__header">
+                                <i class="fas fa-university"></i>
+                                <h4>Universidad Pequeña</h4>
+                                <p>5K-10K estudiantes</p>
+                            </div>
+                            <div class="roi-card__body">
+                                <div class="roi-card__metric">
+                                    <span class="roi-card__label">Inversión Anual</span>
+                                    <span class="roi-card__value">$13.5M CLP</span>
+                                </div>
+                                <div class="roi-card__metric">
+                                    <span class="roi-card__label">Recuperación</span>
+                                    <span class="roi-card__value roi-card__value--success">$18M CLP</span>
+                                </div>
+                                <div class="roi-card__metric roi-card__metric--highlight">
+                                    <span class="roi-card__label">ROI Año 1</span>
+                                    <span class="roi-card__value roi-card__value--large">133%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4 mb-4">
+                        <div class="roi-card roi-card--featured">
+                            <div class="roi-card__badge">Más Popular</div>
+                            <div class="roi-card__header">
+                                <i class="fas fa-university"></i>
+                                <h4>Universidad Mediana</h4>
+                                <p>10K-20K estudiantes</p>
+                            </div>
+                            <div class="roi-card__body">
+                                <div class="roi-card__metric">
+                                    <span class="roi-card__label">Inversión Anual</span>
+                                    <span class="roi-card__value">$25.2M CLP</span>
+                                </div>
+                                <div class="roi-card__metric">
+                                    <span class="roi-card__label">Recuperación</span>
+                                    <span class="roi-card__value roi-card__value--success">$35M CLP</span>
+                                </div>
+                                <div class="roi-card__metric roi-card__metric--highlight">
+                                    <span class="roi-card__label">ROI Año 1</span>
+                                    <span class="roi-card__value roi-card__value--large">139%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4 mb-4">
+                        <div class="roi-card">
+                            <div class="roi-card__header">
+                                <i class="fas fa-university"></i>
+                                <h4>Universidad Grande</h4>
+                                <p>>20K estudiantes</p>
+                            </div>
+                            <div class="roi-card__body">
+                                <div class="roi-card__metric">
+                                    <span class="roi-card__label">Inversión Anual</span>
+                                    <span class="roi-card__value">$40.5M CLP</span>
+                                </div>
+                                <div class="roi-card__metric">
+                                    <span class="roi-card__label">Recuperación</span>
+                                    <span class="roi-card__value roi-card__value--success">$62M CLP</span>
+                                </div>
+                                <div class="roi-card__metric roi-card__metric--highlight">
+                                    <span class="roi-card__label">ROI Año 1</span>
+                                    <span class="roi-card__value roi-card__value--large">153%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <div class="section-header section-header--light">
+                    <h2 class="section-header__title">Únete a la Transformación</h2>
+                    <p class="section-header__subtitle">Reduce la deserción en 10-12% | Recupera $31.5-37.8M CLP/año |
+                        ROI 287% a 3 años</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-lg-6 mb-4">
+                        <div class="contact-card">
+                            <h3 class="contact-card__title">
+                                <i class="fas fa-envelope"></i> Información de Contacto
+                            </h3>
+                            <div class="contact-card__info">
+                                <div class="contact-card__item">
+                                    <i class="fas fa-envelope"></i>
+                                    <div>
+                                        <strong>Email</strong>
+                                        <p>contacto@learntrack.cl</p>
+                                    </div>
+                                </div>
+                                <div class="contact-card__item">
+                                    <i class="fas fa-globe"></i>
+                                    <div>
+                                        <strong>Sitio Web</strong>
+                                        <p>www.learntrack.cl</p>
+                                    </div>
+                                </div>
+                                <div class="contact-card__item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <div>
+                                        <strong>Ubicación</strong>
+                                        <p>Santiago, Chile</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contact-card__cta">
+                                <p class="contact-card__highlight">
+                                    <i class="fas fa-star"></i>
+                                    Primeras 3 instituciones: Condiciones especiales de piloto
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 mb-4">
+                        <div class="contact-card">
+                            <h3 class="contact-card__title">
+                                <i class="fas fa-paper-plane"></i> Solicitar Demostración
+                            </h3>
+                            <form class="contact-form" id="contactForm">
+                                <div class="form-group">
+                                    <label for="institutionName">Nombre de la Institución</label>
+                                    <input type="text" class="form-control" id="institutionName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactName">Nombre Completo</label>
+                                    <input type="text" class="form-control" id="contactName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactEmail">Email</label>
+                                    <input type="email" class="form-control" id="contactEmail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="studentCount">Número de Estudiantes</label>
+                                    <select class="form-control" id="studentCount">
+                                        <option value="">Seleccione...</option>
+                                        <option value="5k-10k">5,000 - 10,000</option>
+                                        <option value="10k-20k">10,000 - 20,000</option>
+                                        <option value="20k+">Más de 20,000</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Mensaje (Opcional)</label>
+                                    <textarea class="form-control" id="message" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block btn-lg">
+                                    <i class="fas fa-paper-plane"></i> Enviar Solicitud
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Next Steps -->
+                <div class="row mt-5">
+                    <div class="col-12 col-md-4 mb-4">
+                        <div class="step-card">
+                            <div class="step-card__number">1</div>
+                            <h4 class="step-card__title">Demo Personalizada</h4>
+                            <p class="step-card__description">
+                                Agenda una presentación ejecutiva de 30 minutos con tu equipo directivo
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 mb-4">
+                        <div class="step-card">
+                            <div class="step-card__number">2</div>
+                            <h4 class="step-card__title">Piloto sin Riesgo</h4>
+                            <p class="step-card__description">
+                                Implementa en 1-2 carreras durante 4 meses con condiciones preferenciales
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 mb-4">
+                        <div class="step-card">
+                            <div class="step-card__number">3</div>
+                            <h4 class="step-card__title">Mide el Impacto</h4>
+                            <p class="step-card__description">
+                                Valida reducción de deserción con datos reales de tu institución
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="learntrack-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-4 mb-4">
+                    <h5 class="learntrack-footer__title">
+                        <i class="fas fa-chart-line"></i> LearnTrack
+                    </h5>
+                    <p class="learntrack-footer__description">
+                        Sistema Predictivo de Retención Estudiantil con Inteligencia Artificial y Machine Learning.
+                        Desarrollado en Chile para Chile.
+                    </p>
+                </div>
+                <div class="col-12 col-md-4 mb-4">
+                    <h5 class="learntrack-footer__title">Enlaces Rápidos</h5>
+                    <ul class="learntrack-footer__links">
+                        <li><a href="#home">Inicio</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#features">Características</a></li>
+                        <li><a href="#impact">Impacto</a></li>
+                        <li><a href="#contact">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4 mb-4">
+                    <h5 class="learntrack-footer__title">Proyecto</h5>
+                    <p class="learntrack-footer__info">
+                        <strong>Autor:</strong> Equipo LearnTrack<br>
+                        <strong>Año:</strong> 2025<br>
+                        <strong>Institución:</strong> AIEP<br>
+                        <strong>Programa:</strong> Técnico en Análisis de Datos
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="learntrack-footer__bottom">
+                        <p>&copy; 2025 LearnTrack Dashboard. Todos los derechos reservados.</p>
+                        <p class="learntrack-footer__tech">
+                            Desarrollado con <i class="fas fa-heart text-danger"></i> usando SASS, Bootstrap 4 y BEM
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery, Popper.js, Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

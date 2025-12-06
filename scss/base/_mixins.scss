@@ -1,0 +1,181 @@
+// ============================================
+// MIXINS - LearnTrack Dashboard
+// ============================================
+
+// MIXIN: Gradiente de fondo
+@mixin gradient-bg($gradient) {
+    background: $gradient;
+}
+
+// MIXIN: Sombra de caja
+@mixin box-shadow($shadow) {
+    box-shadow: $shadow;
+}
+
+// MIXIN: Transición
+@mixin transition($property: all, $duration: $transition-normal, $timing: ease) {
+    transition: $property $duration $timing;
+}
+
+// MIXIN: Border radius
+@mixin border-radius($radius) {
+    border-radius: $radius;
+}
+
+// MIXIN: Flexbox centrado
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// MIXIN: Flexbox columna centrada
+@mixin flex-column-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+// MIXIN: Texto truncado
+@mixin text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// MIXIN: Responsive font size
+@mixin responsive-font($min-size, $max-size) {
+    font-size: calc(#{$min-size} + (#{$max-size} - #{$min-size}) * ((100vw - 320px) / (1200 - 320)));
+}
+
+// MIXIN: Card base
+@mixin card-base {
+    background: $color-white;
+    @include border-radius($border-radius-md);
+    @include box-shadow($shadow-md);
+    padding: $spacing-lg;
+    @include transition(transform, $transition-normal);
+
+    &:hover {
+        transform: translateY(-4px);
+        @include box-shadow($shadow-lg);
+    }
+}
+
+// MIXIN: Botón con gradiente
+@mixin button-gradient($gradient) {
+    @include gradient-bg($gradient);
+    color: $color-white;
+    border: none;
+    padding: $spacing-sm $spacing-lg;
+    @include border-radius($border-radius-sm);
+    font-weight: $font-weight-semibold;
+    @include transition(all, $transition-fast);
+    cursor: pointer;
+
+    &:hover {
+        transform: translateY(-2px);
+        @include box-shadow($shadow-md);
+        opacity: 0.9;
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+// MIXIN: Badge de estado
+@mixin badge-status($bg-color, $text-color: $color-white) {
+    background-color: $bg-color;
+    color: $text-color;
+    padding: $spacing-xs $spacing-sm;
+    @include border-radius($border-radius-sm);
+    font-size: $font-size-small;
+    font-weight: $font-weight-semibold;
+    display: inline-block;
+}
+
+// MIXIN: Animación de pulso
+@mixin pulse-animation {
+    animation: pulse 2s infinite;
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.05);
+            opacity: 0.8;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+}
+
+// MIXIN: Glassmorphism
+@mixin glassmorphism($opacity: 0.1) {
+    background: rgba(255, 255, 255, $opacity);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+// MIXIN: Media query responsive
+@mixin respond-to($breakpoint) {
+    @if $breakpoint ==xs {
+        @media (max-width: #{$breakpoint-sm - 1}) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==sm {
+        @media (min-width: $breakpoint-sm) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==md {
+        @media (min-width: $breakpoint-md) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==lg {
+        @media (min-width: $breakpoint-lg) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==xl {
+        @media (min-width: $breakpoint-xl) {
+            @content;
+        }
+    }
+}
+
+// MIXIN: Hover lift effect
+@mixin hover-lift($distance: -8px) {
+    @include transition(transform, $transition-normal);
+
+    &:hover {
+        transform: translateY($distance);
+        @include box-shadow($shadow-xl);
+    }
+}
+
+// MIXIN: Icon circle
+@mixin icon-circle($size: 60px, $bg-color: $color-primary) {
+    width: $size;
+    height: $size;
+    @include border-radius($border-radius-full);
+    @include flex-center;
+    background: $bg-color;
+    color: $color-white;
+    font-size: calc($size / 2);
+}

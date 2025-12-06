@@ -1,0 +1,103 @@
+// ============================================
+// FEATURE CARDS COMPONENT - LearnTrack Dashboard
+// ============================================
+
+// FEATURES SECTION
+.features-section {
+    @include gradient-bg($gradient-dark);
+    color: $color-white;
+}
+
+// FEATURE CARD
+.feature-card {
+    @include glassmorphism(0.1);
+    @include border-radius($border-radius-lg);
+    padding: $spacing-xl;
+    height: 100%;
+    @include transition(all, $transition-normal);
+    border: 1px solid rgba($color-white, 0.2);
+
+    &:hover {
+        @include glassmorphism(0.2);
+        transform: translateY(-8px);
+        @include box-shadow($shadow-xl);
+    }
+
+    &__icon {
+        @include icon-circle(70px);
+        margin: 0 auto $spacing-lg;
+        @include transition(transform, $transition-normal);
+
+        i {
+            font-size: 32px;
+        }
+
+        &--primary {
+            @include gradient-bg($gradient-primary);
+        }
+
+        &--success {
+            @include gradient-bg($gradient-success);
+        }
+
+        &--warning {
+            @include gradient-bg($gradient-warning);
+        }
+
+        &--info {
+            @include gradient-bg($gradient-info);
+        }
+
+        &--danger {
+            @include gradient-bg($gradient-danger);
+        }
+
+        &--secondary {
+            @include gradient-bg($gradient-secondary);
+        }
+    }
+
+    &:hover &__icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    &__title {
+        font-size: $font-size-h4;
+        font-weight: $font-weight-bold;
+        color: $color-white;
+        text-align: center;
+        margin-bottom: $spacing-md;
+    }
+
+    &__description {
+        font-size: $font-size-base;
+        color: rgba($color-white, 0.9);
+        text-align: center;
+        line-height: 1.7;
+        margin-bottom: $spacing-lg;
+    }
+
+    &__list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            padding: $spacing-xs 0;
+            padding-left: $spacing-lg;
+            position: relative;
+            color: rgba($color-white, 0.85);
+            font-size: $font-size-small;
+
+            &::before {
+                content: '\f00c';
+                font-family: 'Font Awesome 6 Free';
+                font-weight: 900;
+                position: absolute;
+                left: 0;
+                color: $color-success;
+                font-size: 14px;
+            }
+        }
+    }
+}

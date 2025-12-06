@@ -1,0 +1,24 @@
+{
+    "name": "learntrack-dashboard",
+    "version": "1.0.0",
+    "description": "Sistema Predictivo de Retención Estudiantil - LearnTrack Dashboard",
+    "main": "index.html",
+    "scripts": {
+        "sass": "sass scss/main.scss css/main.css",
+        "sass:watch": "sass --watch scss/main.scss css/main.css",
+        "sass:build": "sass scss/main.scss css/main.css --style compressed"
+    },
+    "keywords": [
+        "education",
+        "retention",
+        "machine-learning",
+        "dashboard",
+        "sass",
+        "bootstrap"
+    ],
+    "author": "LearnTrack Team",
+    "license": "MIT",
+    "devDependencies": {
+        "sass": "^1.69.5"
+    }
+}

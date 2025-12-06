@@ -1,0 +1,114 @@
+// ============================================
+// VARIABLES - LearnTrack Dashboard
+// ============================================
+
+// COLORES PRINCIPALES
+$color-primary: #667eea;
+$color-primary-dark: #764ba2;
+$color-secondary: #f093fb;
+$color-secondary-dark: #f5576c;
+
+// COLORES DE ESTADO
+$color-success: #43e97b;
+$color-success-dark: #38f9d7;
+$color-info: #4facfe;
+$color-info-dark: #00f2fe;
+$color-warning: #fa709a;
+$color-warning-dark: #fee140;
+$color-danger: #ff6e7f;
+$color-danger-dark: #bfe9ff;
+
+// COLORES NEUTROS
+$color-dark: #1a1a1a;
+$color-dark-light: #2c3e50;
+$color-gray: #7f8c8d;
+$color-gray-light: #ecf0f1;
+$color-white: #ffffff;
+
+// COLORES DE TEXTO
+$text-primary: #2c3e50;
+$text-secondary: #555555;
+$text-muted: #7f8c8d;
+$text-light: #ffffff;
+
+// TIPOGRAFÍA
+$font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-secondary: 'Outfit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+// TAMAÑOS DE FUENTE
+$font-size-base: 16px;
+$font-size-small: 14px;
+$font-size-large: 18px;
+$font-size-xlarge: 20px;
+
+$font-size-h1: 48px;
+$font-size-h2: 36px;
+$font-size-h3: 28px;
+$font-size-h4: 24px;
+$font-size-h5: 20px;
+$font-size-h6: 18px;
+
+// PESOS DE FUENTE
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+// ESPACIADO
+$spacing-xs: 8px;
+$spacing-sm: 12px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 48px;
+$spacing-xxxl: 64px;
+
+// BORDER RADIUS
+$border-radius-sm: 8px;
+$border-radius-md: 12px;
+$border-radius-lg: 16px;
+$border-radius-xl: 20px;
+$border-radius-full: 50%;
+
+// SOMBRAS
+$shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+$shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+$shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.18);
+$shadow-xxl: 0 20px 60px rgba(0, 0, 0, 0.25);
+
+// TRANSICIONES
+$transition-fast: 0.2s ease;
+$transition-normal: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// BREAKPOINTS (Bootstrap 4)
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Z-INDEX
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// GRADIENTES
+$gradient-primary: linear-gradient(135deg, $color-primary 0%, $color-primary-dark 100%);
+$gradient-secondary: linear-gradient(135deg, $color-secondary 0%, $color-secondary-dark 100%);
+$gradient-success: linear-gradient(135deg, $color-success 0%, $color-success-dark 100%);
+$gradient-info: linear-gradient(135deg, $color-info 0%, $color-info-dark 100%);
+$gradient-warning: linear-gradient(135deg, $color-warning 0%, $color-warning-dark 100%);
+$gradient-danger: linear-gradient(135deg, $color-danger 0%, $color-danger-dark 100%);
+$gradient-dark: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+
+// OPACIDADES
+$opacity-light: 0.1;
+$opacity-medium: 0.5;
+$opacity-heavy: 0.8;

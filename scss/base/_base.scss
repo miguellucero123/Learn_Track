@@ -1,0 +1,250 @@
+// ============================================
+// BASE STYLES - LearnTrack Dashboard
+// ============================================
+
+// Reset y estilos base
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: $font-size-base;
+}
+
+body {
+    font-family: $font-primary;
+    color: $text-primary;
+    background-color: $color-gray-light;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+// Tipografía
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $font-secondary;
+    font-weight: $font-weight-bold;
+    line-height: 1.2;
+    margin-bottom: $spacing-md;
+    color: $text-primary;
+}
+
+h1 {
+    font-size: $font-size-h1;
+
+    @include respond-to(xs) {
+        font-size: $font-size-h2;
+    }
+}
+
+h2 {
+    font-size: $font-size-h2;
+
+    @include respond-to(xs) {
+        font-size: $font-size-h3;
+    }
+}
+
+h3 {
+    font-size: $font-size-h3;
+
+    @include respond-to(xs) {
+        font-size: $font-size-h4;
+    }
+}
+
+h4 {
+    font-size: $font-size-h4;
+}
+
+h5 {
+    font-size: $font-size-h5;
+}
+
+h6 {
+    font-size: $font-size-h6;
+}
+
+p {
+    margin-bottom: $spacing-md;
+    color: $text-secondary;
+    line-height: 1.8;
+}
+
+a {
+    color: $color-primary;
+    text-decoration: none;
+    @include transition(color, $transition-fast);
+
+    &:hover {
+        color: $color-primary-dark;
+        text-decoration: none;
+    }
+}
+
+// Listas
+ul,
+ol {
+    margin-bottom: $spacing-md;
+    padding-left: $spacing-lg;
+}
+
+li {
+    margin-bottom: $spacing-xs;
+}
+
+// Imágenes
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+// Botones base
+button {
+    font-family: $font-primary;
+    cursor: pointer;
+    border: none;
+    outline: none;
+
+    &:focus {
+        outline: 2px solid $color-primary;
+        outline-offset: 2px;
+    }
+}
+
+// Inputs y formularios
+input,
+textarea,
+select {
+    font-family: $font-primary;
+    font-size: $font-size-base;
+
+    &:focus {
+        outline: none;
+        border-color: $color-primary;
+        box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+}
+
+// Utilidades de texto
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-primary {
+    color: $color-primary !important;
+}
+
+.text-success {
+    color: $color-success !important;
+}
+
+.text-danger {
+    color: $color-danger !important;
+}
+
+.text-warning {
+    color: $color-warning !important;
+}
+
+.text-info {
+    color: $color-info !important;
+}
+
+.text-muted {
+    color: $text-muted !important;
+}
+
+// Utilidades de fondo
+.bg-primary {
+    background-color: $color-primary !important;
+}
+
+.bg-light {
+    background-color: $color-gray-light !important;
+}
+
+.bg-dark {
+    background-color: $color-dark !important;
+}
+
+// Utilidades de espaciado
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.mb-1 {
+    margin-bottom: $spacing-xs !important;
+}
+
+.mb-2 {
+    margin-bottom: $spacing-sm !important;
+}
+
+.mb-3 {
+    margin-bottom: $spacing-md !important;
+}
+
+.mb-4 {
+    margin-bottom: $spacing-lg !important;
+}
+
+.mb-5 {
+    margin-bottom: $spacing-xl !important;
+}
+
+.mt-0 {
+    margin-top: 0 !important;
+}
+
+.mt-1 {
+    margin-top: $spacing-xs !important;
+}
+
+.mt-2 {
+    margin-top: $spacing-sm !important;
+}
+
+.mt-3 {
+    margin-top: $spacing-md !important;
+}
+
+.mt-4 {
+    margin-top: $spacing-lg !important;
+}
+
+.mt-5 {
+    margin-top: $spacing-xl !important;
+}
+
+// Smooth scrolling para anclas
+html {
+    scroll-padding-top: 80px;
+}
+
+// Selección de texto
+::selection {
+    background-color: rgba($color-primary, 0.2);
+    color: $text-primary;
+}
+
+::-moz-selection {
+    background-color: rgba($color-primary, 0.2);
+    color: $text-primary;
+}

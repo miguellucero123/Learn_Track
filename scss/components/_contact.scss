@@ -1,0 +1,205 @@
+// ============================================
+// CONTACT COMPONENTS - LearnTrack Dashboard
+// ============================================
+
+// CONTACT SECTION
+.contact-section {
+    @include gradient-bg($gradient-secondary);
+    color: $color-white;
+}
+
+// CONTACT CARD
+.contact-card {
+    @include glassmorphism(0.15);
+    @include border-radius($border-radius-lg);
+    padding: $spacing-xl;
+    border: 1px solid rgba($color-white, 0.3);
+    height: 100%;
+
+    &__title {
+        font-size: $font-size-h4;
+        font-weight: $font-weight-bold;
+        color: $color-white;
+        margin-bottom: $spacing-lg;
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+
+        i {
+            font-size: $font-size-h3;
+        }
+    }
+
+    &__info {
+        // Contenedor de items de contacto
+    }
+
+    &__item {
+        display: flex;
+        align-items: flex-start;
+        gap: $spacing-md;
+        padding: $spacing-md 0;
+        border-bottom: 1px solid rgba($color-white, 0.2);
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        i {
+            font-size: $font-size-h5;
+            color: $color-white;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        div {
+            flex: 1;
+
+            strong {
+                display: block;
+                font-size: $font-size-base;
+                font-weight: $font-weight-bold;
+                color: $color-white;
+                margin-bottom: $spacing-xs;
+            }
+
+            p {
+                font-size: $font-size-base;
+                color: rgba($color-white, 0.9);
+                margin: 0;
+            }
+        }
+    }
+
+    &__cta {
+        margin-top: $spacing-lg;
+        padding-top: $spacing-lg;
+        border-top: 1px solid rgba($color-white, 0.2);
+    }
+
+    &__highlight {
+        @include glassmorphism(0.2);
+        padding: $spacing-md;
+        @include border-radius($border-radius-sm);
+        text-align: center;
+        color: $color-white;
+        font-weight: $font-weight-semibold;
+        margin: 0;
+
+        i {
+            color: $color-warning;
+            margin-right: $spacing-xs;
+        }
+    }
+}
+
+// CONTACT FORM
+.contact-form {
+    .form-group {
+        margin-bottom: $spacing-lg;
+
+        label {
+            display: block;
+            font-size: $font-size-base;
+            font-weight: $font-weight-semibold;
+            color: $color-white;
+            margin-bottom: $spacing-sm;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: $spacing-md;
+            @include border-radius($border-radius-sm);
+            border: 2px solid rgba($color-white, 0.3);
+            background-color: rgba($color-white, 0.1);
+            color: $color-white;
+            font-size: $font-size-base;
+            @include transition(all, $transition-fast);
+
+            &::placeholder {
+                color: rgba($color-white, 0.5);
+            }
+
+            &:focus {
+                border-color: $color-white;
+                background-color: rgba($color-white, 0.2);
+                @include box-shadow(0 0 0 3px rgba($color-white, 0.1));
+            }
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        select.form-control {
+            cursor: pointer;
+
+            option {
+                background-color: $color-dark-light;
+                color: $color-white;
+            }
+        }
+    }
+
+    .btn-primary {
+        @include button-gradient($gradient-primary);
+        width: 100%;
+        padding: $spacing-md $spacing-xl;
+        font-size: $font-size-large;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: $spacing-sm;
+
+        &:hover {
+            background: $color-white;
+            color: $color-primary;
+        }
+    }
+}
+
+// STEP CARD
+.step-card {
+    @include glassmorphism(0.15);
+    @include border-radius($border-radius-lg);
+    padding: $spacing-xl;
+    text-align: center;
+    border: 1px solid rgba($color-white, 0.3);
+    @include transition(all, $transition-normal);
+    height: 100%;
+
+    &:hover {
+        @include glassmorphism(0.25);
+        transform: translateY(-8px);
+        @include box-shadow($shadow-xl);
+    }
+
+    &__number {
+        @include icon-circle(80px, $color-white);
+        margin: 0 auto $spacing-lg;
+        color: $color-primary;
+        font-size: $font-size-h2;
+        font-weight: $font-weight-extrabold;
+        @include box-shadow($shadow-lg);
+        @include transition(transform, $transition-normal);
+    }
+
+    &:hover &__number {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    &__title {
+        font-size: $font-size-h4;
+        font-weight: $font-weight-bold;
+        color: $color-white;
+        margin-bottom: $spacing-md;
+    }
+
+    &__description {
+        font-size: $font-size-base;
+        color: rgba($color-white, 0.9);
+        line-height: 1.7;
+        margin: 0;
+    }
+}
