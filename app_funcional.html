@@ -104,6 +104,11 @@
 </head>
 
 <body>
+    <script>
+        if (!localStorage.getItem('learntrack_auth')) {
+            window.location.href = 'index.html';
+        }
+    </script>
 
     <!-- HEADER / NAVBAR -->
     <header class="learntrack-header">

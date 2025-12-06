@@ -80,7 +80,7 @@
                             estudiantil hasta un <strong>12%</strong>
                         </p>
                         <div class="hero-section__cta">
-                            <a href="app_funcional.html"
+                            <a href="#" data-toggle="modal" data-target="#loginModal"
                                 class="btn btn-primary btn-lg hero-section__btn hero-section__btn--primary">
                                 <i class="fas fa-rocket"></i> Abrir Aplicación
                             </a>
@@ -698,6 +698,91 @@
             </div>
         </div>
     </footer>
+
+    <!-- LOGIN MODAL -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title font-weight-bold">
+                        <i class="fas fa-lock mr-2"></i>Acceso Seguro
+                    </h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="text-center mb-4">
+                        <div class="avatar-bg bg-light rounded-circle d-inline-flex p-3 mb-2">
+                            <i class="fas fa-user-shield fa-3x text-primary"></i>
+                        </div>
+                        <h4 class="font-weight-bold text-dark">Bienvenido</h4>
+                        <p class="text-muted">Ingresa tus credenciales institucionales</p>
+                    </div>
+                    <form id="accessForm" onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label class="font-weight-bold text-muted small text-uppercase">Usuario</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-light border-0"><i
+                                            class="fas fa-user text-muted"></i></span>
+                                </div>
+                                <input type="text" class="form-control bg-light border-0" id="username"
+                                    placeholder="admin" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold text-muted small text-uppercase">Contraseña</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-light border-0"><i
+                                            class="fas fa-key text-muted"></i></span>
+                                </div>
+                                <input type="password" class="form-control bg-light border-0" id="password"
+                                    placeholder="•••••" required>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger d-none" id="loginError">
+                            <i class="fas fa-exclamation-circle mr-1"></i> Credenciales incorrectas
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block btn-lg shadow-sm font-weight-bold mt-4">
+                            INGRESAR AL DASHBOARD
+                        </button>
+                    </form>
+                </div>
+                <div class="modal-footer bg-light justify-content-center">
+                    <small class="text-muted">Acceso restringido a personal autorizado</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const error = document.getElementById('loginError');
+
+            // Credenciales Demo
+            if (user === 'admin' && pass === 'admin') {
+                localStorage.setItem('learntrack_auth', 'true');
+                localStorage.setItem('learntrack_user', user);
+
+                const btn = e.target.querySelector('button');
+                btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Ingresando...';
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-success');
+
+                setTimeout(() => {
+                    window.location.href = 'app_funcional.html';
+                }, 1000);
+            } else {
+                error.classList.remove('d-none');
+                setTimeout(() => error.classList.add('d-none'), 3000);
+            }
+        }
+    </script>
 
     <!-- jQuery, Popper.js, Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
