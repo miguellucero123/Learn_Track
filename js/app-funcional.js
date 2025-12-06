@@ -379,6 +379,7 @@
             `).join('')}
             <hr>
             <div class="text-right">
+                <button class="btn btn-info mr-2" onclick="openSimulator('${student.id}')"><i class="fas fa-robot"></i> Simular Escenarios</button>
                 <button class="btn btn-success" onclick="generateIntervention()">Generar Intervención IA</button>
             </div>
         `;
